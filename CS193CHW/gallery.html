@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Stanford Gallery</title>
+<style>
+#caption {
+	padding: 10px;
+	box-sizing: border-box;
+	color: white;
+	font-size: 14pt;
+	font-family: sans-serif;
+	background-color: #008800;
+	opacity: 0.5;
+}
+</style>
+</head>
+<body>
+<div id="photoSection">
+<img  id='photo' src='memchu.jpg' alt='photo' />
+<div id="caption">
+Stanford Memorial Church - the church used to have an 80' bell tower, which fell in the 1906 earthquake.
+</div>
+<div id="forwardOverlay"></div>
+<div id="backwardOverlay"></div>
+</div>
+<script>
+"use strict";
+var currentIndex=0; 
+var photoArray = [
+		{filename: "memchu.jpg",
+		 caption: "Stanford Memorial Church - the church used to have an 80' bell tower, which fell in the 1906 earthquake."},
+		{filename: "quad.jpg",
+		 caption: "The Stanford Quad"},
+		{filename: "hoop.jpg",
+		 caption: "The <i>Red Hoop Fountain</i> with Green Library in the background."},
+		{filename: "memorial-court.jpg",
+		 caption: "Memorial Court (in the front of the Quad) with Rodin's <i>Burghers of Calais</i> statues."},
+		{filename: "gates.jpg",
+		 caption: "The Gates Building - home of Stanford Computer Science."},
+		{filename: "stone-river.jpg",
+		 caption: "The Stone River statue near the Cantor Arts Center (Stanford's own art museum)."},
+	];
+var image=document.getElementById("photo"); 
+var windowWidth=window.innerWidth; 
+var windowHeight=window.innerHeight; 
+var photoSection=document.getElementById("photoSection"); 
+var caption=document.getElementById("caption"); 
+var forwardOverlay=document.getElementById("forwardOverlay"); 
+var backwardOverlay=document.getElementById("backwardOverlay"); 
+image.style.height="600px"; 
+image.style.width="800px"; 
+image.style.zIndex="-1";
+photoSection.style.position="absolute"; 
+photoSection.style.display="flex"; 
+
+var toLeft=0.5*windowWidth - 400; 
+photoSection.style.left= toLeft + "px"; 
+var toRight=0.5*windowHeight - 300; 
+photoSection.style.top= toRight + "px"; 
+caption.style.position="absolute"; 
+caption.style.zIndex="0"; 
+caption.style.bottom="0px"; 
+caption.style.left="0px"; 
+caption.style.width="800px"; 
+backwardOverlay.style.position="absolute"; 
+forwardOverlay.style.position="absolute"; 
+backwardOverlay.style.zIndex="1"; 
+forwardOverlay.style.zIndex="1"; 
+backwardOverlay.style.left="0px"; 
+forwardOverlay.style.left="400px"; 
+backwardOverlay.style.margin="0px"; 
+forwardOverlay.style.margin="0px"; 
+backwardOverlay.style.width="400px"; 
+forwardOverlay.style.width="400px"; 
+backwardOverlay.style.height="600px"; 
+forwardOverlay.style.height="600px"; 
+
+function handleResize(){
+	var windowWidth=window.innerWidth; 
+	var windowHeight=window.innerHeight; 
+	var toLeft=0.5*windowWidth - 400;
+	photoSection.style.left= toLeft + "px";
+	var toRight=0.5*windowHeight - 300;
+	photoSection.style.top=toRight + "px"; 
+}
+
+function forward(){
+	if(currentIndex==5){
+		currentIndex=0; 
+	}
+	else{
+    	currentIndex++;
+	}
+    var pictureName=photoArray[currentIndex].filename; 
+	var pictureCaption=photoArray[currentIndex].caption; 
+	document.getElementById("photo").src=pictureName; 
+	document.getElementById("caption").innerHTML =pictureCaption; 
+}
+
+function backward(){
+	if(currentIndex==0){
+		currentIndex=5;
+	}
+	else{
+		currentIndex--; 
+	}
+	var pictureName=photoArray[currentIndex].filename; 
+	var pictureCaption=photoArray[currentIndex].caption; 
+	document.getElementById("photo").src=pictureName; 
+	document.getElementById("caption").innerHTML =pictureCaption;
+}
+
+function backward1(){
+	var backward=document.getElementById("backwardOverlay");
+	backward.innerHTML=`<br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br>PREVIOUS PICTURE`; 
+}
+
+function forward1(){
+	var forward=document.getElementById("forwardOverlay"); 
+	forward.innerHTML=`<br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br>NEXT PICTURE`; 
+
+}
+
+function deleteBackward(){
+	var backward=document.getElementById("backwardOverlay");
+	backward.innerHTML=""; 
+}
+
+function deleteForward(){
+	var forward=document.getElementById("forwardOverlay"); 
+	forward.innerHTML=""; 
+}
+
+window.addEventListener("resize",handleResize,false);
+document.getElementById("backwardOverlay").addEventListener("click",backward, false); 
+document.getElementById("backwardOverlay").addEventListener("mouseenter",backward1, false); 
+document.getElementById("backwardOverlay").addEventListener("mouseleave",deleteBackward, false); 
+document.getElementById("forwardOverlay").addEventListener("click",forward, false); 
+document.getElementById("forwardOverlay").addEventListener("mouseenter",forward1, false); 
+document.getElementById("forwardOverlay").addEventListener("mouseleave",deleteForward, false); 
+</script>
+</body>
+</html>

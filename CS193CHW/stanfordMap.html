@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<script type="text/javascript">
+//preload map pictures
+if (document.images) {
+    pic1 = new Image();
+    pic1.src = "map-s.gif";
+    pic2 = new Image(); 
+    pic2.src = "map-m.gif"; 
+    pic3 = new Image(); 
+    pic3.src = "map-l.gif";
+    pic4 = new Image(); 
+    pic4.src = "map-xl.gif"; 
+}
+</script>
+
+<title>SwipeHistory</title>
+<style>
+
+body{
+	display: flex;
+	flex-flow: column wrap;
+    max-height: 600px; 
+    overflow: hidden;
+	margin: 0; 
+	padding: 0; 
+	border: 0; 
+	outline: 0;
+}
+
+/*#frame {
+	border-style: inset;
+	overflow: hidden;
+	margin: 0px;
+	top:  1000px;
+}
+*/
+.nav{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width:  1920px;
+	z-index: 3;
+}
+
+.nav img {
+    display: block;
+    height: 56%;
+}
+
+.nobull{
+	list-style-type:  none;
+}
+#sideBarButton{
+	z-index:  100;
+	position:  absolute;
+	top: 120px;
+	left:  0px;
+	width:  52px;
+	height:  100px;
+	padding: 0;
+	border: none;
+	background: none;
+}
+
+/* The sidebar menu */
+#sidenav {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 0px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 98; /* Stay on top */
+  top: 100px; /* Stay at the top */
+  left: 0;
+  background-color: #FFF; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+}
+
+#sidenav_1 {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 0px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 102; /* Stay on top */
+  top: 100px; /* Stay at the top */
+  left: 0;
+  background-color: #FFF; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+}
+
+#close_div1{
+	z-index:  100;
+	position:  absolute;
+	top: 45px;
+	left:  20px;
+	width:  52px;
+	height:  50px;
+	padding: 0;
+	border: none;
+	background: none;
+}
+
+</style>
+</head>
+<body>
+<div class="nav">
+	<img id="navBar" src="titleBar.png" width="1920">
+</div>
+<div id="frame"> 
+	<div id="sidenav">
+		<ul class="nobull">
+	        <li>
+<!-- 	            <a href="#" class="active">
+	                <i class="fas fa-home icon"></i>
+	                Home
+	            </a> -->
+	            <img id="1" src="PPG arena.png" onclick="sideBarOnClick()">
+	        </li>
+	        <li><!-- <a href="#">
+	                <i class="fas fa-rss icon"></i>
+	                News
+	            </a> -->
+	        	<img id="2" src="point state park.png" onclick="sideBarOnClick()">
+	        </li>
+	        <li><!-- <a href="#">
+	                <i class="fas fa-address-book icon"></i>
+	                Contact
+	            </a> -->
+	            <img id="3" src="Museum.png" onclick="sideBarOnClick()">
+	        </li>
+	        <li><!-- <a href="#"><i class="fas fa-user icon"></i>
+	                About
+	            </a> -->
+	            <img id="4" src="Mt. washington.png" onclick="sideBarOnClick()">
+	        </li>
+	        <li><!-- <a href="#"><i class="fas fa-user icon"></i>
+	                About
+	            </a> -->
+	            <img id="5" src="market square.png" onclick="sideBarOnClick()">
+	        </li>
+	        <li><!-- <a href="#"><i class="fas fa-user icon"></i>
+	                About
+	            </a> -->
+	            <img id="6" src="highmark stadium.png" onclick="sideBarOnClick()">
+	        </li>
+	    </ul>
+	</div>
+	<div id="sidenav_1">
+		<button id="close_div1" onclick="toggleDivBack()"></button>
+		<img id="7" src="Left-sidebar.png">
+	</div>
+	<button style="background: url('Click-to open.png')" id="sideBarButton" onclick="toggleSideBar()"></button>
+<!-- 	<input type="button" id="sideBar"> -->
+	<img id="mapPicture" src="map.png" alt="MAP">
+	<img id="tag1" src="mark.png">
+</div>
+
+<script> 
+var map=document.getElementById("mapPicture"); 
+var frame=document.getElementById("frame"); 
+//here handle size changing
+var cSizeX;
+var cSizeY;  
+frame.style.width="1920px"; 
+frame.style.height="1080px"; 
+frame.style.position="absolute";
+map.style.position="absolute"; 
+map.style.left="0px"; 
+map.style.top="100px";
+var booleanValue= false;
+var sideBarOpen = true;
+var showNav_1 = false;
+var sideBar = document.getElementById("sidenav");
+var sideBarButton = document.getElementById("sideBarButton");
+var sideBar1 = document.getElementById("sidenav_1");
+var tag1 = document.getElementById("tag1");
+tag1.style.position = "absolute";
+tag1.style.left = "400px"; 
+tag1.style.top = "600px";
+console.log("ioioioi");
+console.log(tag1.style);
+console.log(map.style);
+var diffX1 = 400;
+var diffY1 = 600;
+
+function handleResize(){
+	var windowWidth=1920;
+	var windowHeight=1080;
+	//window.innerHeight;
+	cSizeX=windowWidth/1920; 
+	cSizeY=windowHeight/1080; 
+	frame.style.width=1920*cSizeX+"px"; 
+	frame.style.height=1080*cSizeY+"px"; 
+	var toLeft=0.5*windowWidth - 960*cSizeX; 
+	var toRight=0.5*windowHeight - 540*cSizeY;
+	frame.style.left= String(toLeft) + "px";
+	frame.style.top=String(toRight) + "px";
+}
+
+function insideFrame(x,y){
+	var windowWidth=window.innerWidth; 
+	var windowHeight=window.innerHeight;
+	var yesOrNo= true;
+	if((x<(0.5*windowWidth-960*cSizeX))||(x>(0.5*windowWidth+960*cSizeX))) {
+		yesOrNo=false; 
+	}
+	if((y<(0.5*windowHeight-540*cSizeY))||(y>(0.5*windowHeight+540*cSizeY))){
+		yesOrNo=false; 
+	}
+	//button size
+	if(((0.5*windowHeight-540*cSizeY)<y) && (y<(0.5*windowHeight-540*cSizeY+155))
+		&&((0.5*windowWidth-960*cSizeX)<x) && (x<(0.5*windowWidth-960*cSizeX+120))){
+		yesOrNo=false; 
+	}
+	return yesOrNo; 
+}
+
+function changeShape(e){
+	e.preventDefault(); 
+	var XX=e.clientX; 
+	var YY=e.clientY; 
+	if(insideFrame(XX,YY)){
+	var windowWidth=window.innerWidth; 
+	var windowHeight=window.innerHeight;
+	var mapX=map.getBoundingClientRect().left-(0.5*windowWidth-960*cSizeX);
+	var mapY=map.getBoundingClientRect().top-(0.5*windowHeight-540*cSizeY);
+	var x=e.clientX-(0.5*windowWidth-960*cSizeX); 
+	var y=e.clientY-(0.5*windowHeight-540*cSizeY); 
+	xDifference=x-mapX; 
+	yDifference=y-mapY; 
+	document.getElementById("frame").style.cursor = "move"; 
+	booleanValue=true;
+	}
+}
+
+function changeShapeBack(){ 
+	document.getElementById("frame").style.cursor = "default";
+	booleanValue=false; 
+}
+
+
+function drag(e){ 
+	var windowWidth=window.innerWidth; 
+	var windowHeight=window.innerHeight; 
+	var x=e.clientX;
+	var y=e.clientY;
+	if((booleanValue)&&insideFrame(x,y)){
+		x=e.clientX-(0.5*windowWidth-960*cSizeX);
+		y=e.clientY-(0.5*windowHeight-540*cSizeY); 
+		var rightValue=x-xDifference; 
+		map.style.left=rightValue.toString()+"px"; 
+		var bottomValue=y-yDifference;
+		map.style.top=bottomValue.toString()+"px"; 
+		console.log(diffX1);
+		tag1.style.left = (rightValue + diffX1).toString()+"px";
+		tag1.style.top = (bottomValue + diffY1).toString()+"px";
+	}
+}
+
+function openSideBar(){
+	var button = document.getElementById("sideBarButton");
+	button.style.backgroundImage= "url('Click-to open.png')";
+}
+
+function closeSideBar(){
+	var button = document.getElementById("sideBarButton");
+	button.style.backgroundImage= "url('click-to-close.png')";
+}
+
+function toggleSideBar(){
+	if(sideBarOpen){
+		closeSideBar();
+		sideBarOpen = false;
+		map.style.left="540px";
+		sideBarButton.style.left = "540px";
+		if(showNav_1){
+			sideBar1.style.width = "540px";
+		}
+		else{
+			sideBar.style.width = "540px";
+		}
+		var val = 540 + diffX1;
+		console.log(val);
+		tag1.style.left = val.toString() + "px";
+	}
+	else{
+		openSideBar();
+		sideBarOpen = true;
+		map.style.left="0px";
+		sideBarButton.style.left = "0px";
+		if(showNav_1){
+			sideBar1.style.width = "0px";
+		}
+		else{
+			sideBar.style.width = "0px";
+		}
+		var val = 0 + diffX1;
+		console.log(val);
+		tag1.style.left = val.toString() + "px";
+
+	}
+}
+
+
+function sideBarOnClick(){
+	showNav_1 = true;
+	sideBar.style.width = "0px";
+	sideBar1.style.width = "540px";
+
+}
+
+function toggleDivBack(){
+	showNav_1 = false;
+	sideBar1.style.width = "0px";
+	sideBar.style.width = "540px";
+}
+
+
+window.onload=handleResize; 
+window.addEventListener("resize",handleResize,false);
+document.addEventListener("mousedown", function(e){changeShape(e);}, false);
+document.addEventListener("mouseup", changeShapeBack, false); 
+document.addEventListener("mousemove",function(e)
+	{var e = e; drag(e);} , false); 
+
+</script>
+</body>
+</html>

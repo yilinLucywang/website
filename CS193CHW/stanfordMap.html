@@ -102,6 +102,13 @@ body{
 	background: none;
 }
 
+#itemOnRight{
+	position:  absolute; 
+	left:  0px; 
+	top:  100px;
+	z-index : 0; 
+}
+
 </style>
 </head>
 <body>
@@ -153,12 +160,15 @@ body{
 	</div>
 	<button style="background: url('Click-to open.png')" id="sideBarButton" onclick="toggleSideBar()"></button>
 <!-- 	<input type="button" id="sideBar"> -->
-	<img id="mapPicture" src="map.png" alt="MAP">
-	<img id="tag1" src="mark.png">
+	<div id = "itemOnRight">
+		<img id="mapPicture" src="map.png" alt="MAP">
+		<img id="tag1" src="mark.png" onclick="markOnClick()">
+	</div>
 </div>
 
 <script> 
 var map=document.getElementById("mapPicture"); 
+var itemRight = document.getElementById("itemOnRight");
 var frame=document.getElementById("frame"); 
 //here handle size changing
 var cSizeX;
@@ -167,8 +177,11 @@ frame.style.width="1920px";
 frame.style.height="1080px"; 
 frame.style.position="absolute";
 map.style.position="absolute"; 
-map.style.left="0px"; 
-map.style.top="100px";
+map.style.left = "0px"; 
+map.style.top = "0px";
+itemRight.style.position="absolute"; 
+itemRight.style.left="0px"; 
+itemRight.style.top="100px";
 var booleanValue= false;
 var sideBarOpen = true;
 var showNav_1 = false;
@@ -284,6 +297,7 @@ function toggleSideBar(){
 		var val = 540 + diffX1;
 		console.log(val);
 		tag1.style.left = val.toString() + "px";
+		map.style.left = "540px";
 	}
 	else{
 		openSideBar();
@@ -299,6 +313,7 @@ function toggleSideBar(){
 		var val = 0 + diffX1;
 		console.log(val);
 		tag1.style.left = val.toString() + "px";
+		map.style.left = "0px";
 
 	}
 }
@@ -308,6 +323,7 @@ function sideBarOnClick(){
 	showNav_1 = true;
 	sideBar.style.width = "0px";
 	sideBar1.style.width = "540px";
+	window.location.replace("testVideoBarOpen.html");
 
 }
 
@@ -316,6 +332,11 @@ function toggleDivBack(){
 	sideBar1.style.width = "0px";
 	sideBar.style.width = "540px";
 }
+
+function markOnClick(){
+	window.location.replace("testVideo.html");
+}
+
 
 
 window.onload=handleResize; 

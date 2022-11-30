@@ -162,6 +162,7 @@ body{
 <!-- 	<input type="button" id="sideBar"> -->
 	<div id = "itemOnRight">
 		<script src="https://swipevideo.site/libs/embed.js"></script><div class="sv-embed" data-cid="bf9dc58322"></div>
+		<img id="progressBar" src="timeline.png">
 		<img id="mapPicture" src="map.png" alt="MAP">
 		<img id="tag1" src="mark.png" onclick="markOnClick()">
 	</div>
@@ -329,22 +330,21 @@ function toggleDivBack(){
 	showNav_1 = false;
 	sideBar1.style.width = "0px";
 	sideBar.style.width = "540px";
+	window.location.replace("mapBarOpen.html");
 }
 
 function markOnClick(){
-	alert("hihihi");
-	//itemOnRight.innerHTML = `<script src="https://swipevideo.site/libs/embed.js"><\/script><div class="sv-embed" data-cid="bf9dc58322"></div>`;
-	//document.innerHTML = `<script src="https://swipevideo.site/libs/embed.js"><\/script><div class="sv-embed" data-cid="bf9dc58322"></div>`;
-	var toAdd = `<script src="https://swipevideo.site/libs/embed.js"><\/script><div class="sv-embed" data-cid="bf9dc58322"><\/div>`;
-	itemOnRight.innerHTML = toAdd;
-	//console.log(script + `<div class="sv-embed" data-cid="bf9dc58322"></div>`);
-	var scripts = itemOnRight.getElementsByTagName("script"); 
-	for(var i = 0; i < scripts.length; i++){
-		eval(scripts[i].innerText);
+	if(sideBarOpen){
+		window.location.replace("testVideo.html");
+	}
+	else{
+		window.location.replace("testVideoBarOpen.html");
 	}
 }
 
-
+toggleSideBar();
+sideBarOnClick(); 
+toggleSideBar();
 window.onload=handleResize; 
 window.addEventListener("resize",handleResize,false);
 document.addEventListener("mousedown", function(e){changeShape(e);}, false);

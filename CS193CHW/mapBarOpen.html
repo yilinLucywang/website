@@ -283,6 +283,7 @@ function closeSideBar(){
 }
 
 function toggleSideBar(){
+	//window.location.replace("stanfordMap.html");
 	if(sideBarOpen){
 		closeSideBar();
 		sideBarOpen = false;
@@ -343,7 +344,7 @@ function markOnClick(){
 }
 
 
-
+toggleSideBar();
 window.onload=handleResize; 
 window.addEventListener("resize",handleResize,false);
 document.addEventListener("mousedown", function(e){changeShape(e);}, false);

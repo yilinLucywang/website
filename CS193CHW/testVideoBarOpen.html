@@ -103,9 +103,9 @@ body{
 }
 
 #itemOnRight{
-	position:  absolute; 
+	position:  relative; 
 	left:  540px; 
-	top:  100px;
+	top:  300px;
 	z-index : 0; 
 	width:  1380px;
 }
@@ -181,7 +181,7 @@ frame.style.height="1080px";
 frame.style.position="absolute";
 
 itemRight.style.position="absolute"; 
-itemRight.style.left="0px"; 
+itemRight.style.left="540px"; 
 itemRight.style.top="100px";
 var booleanValue= false;
 var sideBarOpen = true;
@@ -300,6 +300,8 @@ function toggleSideBar(){
 		var val = 540 + diffX1;
 		console.log(val);
 		tag1.style.left = val.toString() + "px";
+		itemRight.style.left="540px"; 
+		itemRight.style.width="1380px";
 	}
 	else{
 		openSideBar();
@@ -315,7 +317,8 @@ function toggleSideBar(){
 		var val = 0 + diffX1;
 		console.log(val);
 		tag1.style.left = val.toString() + "px";
-
+		itemRight.style.left="0px"; 
+		itemRight.style.width="1920px";
 	}
 }
 

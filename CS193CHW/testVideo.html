@@ -110,6 +110,19 @@ body{
 	width: 1920px;
 }
 
+#tinyButtons{
+}
+
+#feet{
+	  float: right;
+	  padding:  10px;
+}
+#like{
+	float: right;
+	padding:  10px;
+}
+
+#
 </style>
 </head>
 <body>
@@ -163,6 +176,10 @@ body{
 <!-- 	<input type="button" id="sideBar"> -->
 	<div id = "itemOnRight">
 		<script src="https://swipevideo.site/libs/embed.js"></script><div class="sv-embed" data-cid="bf9dc58322"></div>
+		<div id="tinyButtons">
+			<img id="feet" src="go.png" onclick="toggleGo()">
+			<img id="like" src="like.png" onclick="toggleLike()">
+		</div>
 		<img id="progressBar" src="timeline.png">
 		<img id="mapPicture" src="map.png" alt="MAP">
 		<img id="tag1" src="mark.png" onclick="markOnClick()">
@@ -176,6 +193,8 @@ var frame=document.getElementById("frame");
 //here handle size changing
 var cSizeX;
 var cSizeY;  
+var isFeetOn = false; 
+var isHeartOn = false;
 frame.style.width="1920px"; 
 frame.style.height="1080px"; 
 frame.style.position="absolute";
@@ -346,6 +365,29 @@ function markOnClick(){
 	}
 }
 
+function toggleGo(){
+	var feet = document.getElementById("feet");
+	if(isFeetOn){
+		feet.src = "go.png";
+		isFeetOn = false;
+	}
+	else{
+		feet.src = "went.png";
+		isFeetOn = true;
+	}
+}
+
+function toggleLike(){
+	var like = document.getElementById("like");
+	if(isHeartOn){
+		like.src = "like.png";
+		isHeartOn = false;
+	}
+	else{
+		like.src = "liked.png";
+		isHeartOn = true;
+	}
+}
 toggleSideBar();
 sideBarOnClick(); 
 toggleSideBar();
